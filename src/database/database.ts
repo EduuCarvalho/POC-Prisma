@@ -1,12 +1,6 @@
-import pg from "pg";
-import dotenv from 'dotenv';
-dotenv.config();
+import pkg from "@prisma/client";
 
-const {Pool} = pg;
+const { PrismaClient } = pkg;
+const prisma = new PrismaClient();
 
-const connectionDB = new Pool({
-    connectionString:`postgresql://postgres:123456gm@localhost:5432/POC_filmes_typescript?schema=public`
- 
-})
-
-export default connectionDB;
+export default prisma;

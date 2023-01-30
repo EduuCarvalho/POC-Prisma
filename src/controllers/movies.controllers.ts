@@ -1,6 +1,5 @@
 import { Request, Response } from "express"
-import { ResultQueryMeta } from "postgres";
-import { postFilmes, getFilmes, updateDescription,deleteFilme } from "../repositories/filmesRepository.js";
+import { postFilmes, getFilmes, updateDescription,deleteFilme, showAll } from "../repositories/filmesRepository.js";
 
 
 type Filme = {
@@ -9,6 +8,11 @@ type Filme = {
     status: boolean,
     plataformaId: number,
     generoId: number
+}
+export async function getAllMovies(req: Request, res: Response){
+    const filmes = await showAll();
+    return res.status(200).send(filmes);
+
 }
 
 export async function getHealth(req: Request, res: Response) {
@@ -35,8 +39,8 @@ export async function getFilmeById(req:Request,res:Response) {
     const numberId = parseInt(id);
   
      try{
-        const {rows} = await getFilmes(numberId);
-        res.send(rows);
+        const filme = await getFilmes(numberId);
+        res.status(200).send(filme);
      }catch (err) {
         res.status(500).send(err.message);
      }
@@ -63,7 +67,7 @@ const updateFilme = req.body as Update;
 }
 
 type Delete = {
-        filmeId:Number
+        filmeId:number
 }
 
 export async function deleteFilmeById (req:Request, res:Response) {
@@ -73,7 +77,7 @@ export async function deleteFilmeById (req:Request, res:Response) {
     try{
         await deleteFilme(deleteId.filmeId)
 
-        res.status(200).send("Filme delettado com sucesso!!!")
+        res.status(200).send("Filme deletado com sucesso!!!")
     }catch(err){
         res.status(500).send(err.message)
     }

@@ -7,12 +7,17 @@
   "scripts": {
     "build": "tsc src/index.ts",
     "start": "node dist/index.js",
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "prisma:seed":"npx prisma db seed"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@prisma/client": "^4.9.0",
     "@types/express": "^4.17.15",
     "@types/node": "^18.11.18",
     "nodemon": "^2.0.20",
